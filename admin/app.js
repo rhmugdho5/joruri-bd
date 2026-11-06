@@ -10,13 +10,16 @@ const NUMBER_CATEGORIES = ['national', 'police', 'fire', 'ambulance', 'health', 
 const GUIDE_ICONS = ['heart', 'stroke', 'unconscious', 'choking', 'bleeding', 'burn', 'fracture', 'electric', 'drowning', 'snake',
   'animal', 'poison', 'seizure', 'road', 'fire', 'gas', 'collapse', 'flood', 'cyclone', 'earthquake', 'lightning', 'landslide', 'storm'];
 // Collections the phones download (each save raises meta/content.version).
-const CONTENT = ['emergency_numbers', 'guides', 'hospitals', 'pharmacies', 'announcements'];
+const CONTENT = ['emergency_numbers', 'guides', 'hospitals', 'pharmacies', 'medicines', 'police_stations', 'fire_stations', 'announcements'];
 const ICONS = {
   dashboard: 'M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z',
   announcements: 'M18 11v2h4v-2h-4zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61zM20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4zM4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1v4h2v-4h1l5 3V6L8 9H4zm11.5 3c0-1.33-.58-2.53-1.5-3.35v6.69c.92-.81 1.5-2.01 1.5-3.34z',
   emergency_numbers: 'M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z',
   hospitals: 'M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z',
   pharmacies: 'M21 5h-2.64l1.14-3.14L17.15 1l-1.46 4H3v2l2 6-2 6v2h18v-2l-2-6 2-6V5zm-5 9h-3v3h-2v-3H8v-2h3V9h2v3h3v2z',
+  medicines: 'M4.22 11.29l7.07-7.07a5 5 0 0 1 7.07 7.07l-7.07 7.07a5 5 0 0 1-7.07-7.07zm1.41 1.42a3 3 0 0 0 4.24 4.24l3.54-3.54-4.24-4.24-3.54 3.54z',
+  police_stations: 'M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h2v2h-2v2h-2v-2H9V9h2V7z',
+  fire_stations: 'M19.48 12.35c-1.57-4.08-7.16-4.3-5.81-10.23.1-.44-.37-.78-.75-.55C9.29 3.71 6.68 8 8.87 13.62c.18.46-.36.89-.75.59-1.81-1.37-2-3.34-1.84-4.75.06-.52-.62-.77-.91-.34C4.69 10.16 4 11.84 4 14.37c.38 5.6 5.11 7.32 6.81 7.54 2.43.31 5.06-.14 6.95-1.87 2.08-1.93 2.84-5.01 1.72-7.69zm-9.28 5.03c1.44-.35 2.18-1.39 2.38-2.31.33-1.43-.96-2.83-.09-5.09.33 1.87 3.27 3.04 3.27 5.08.08 2.53-2.66 4.7-5.56 2.32z',
   guides: 'M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z',
   donors: 'M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z',
   app: 'M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14zm-1-6h-3V8h-2v5H8l4 4 4-4z',
@@ -100,14 +103,22 @@ const SCHEMAS = {
   },
   hospitals: {
     title: 'Hospitals, tests & prices', idFrom: (d) => slug(d.name) || 'h-' + Date.now(),
-    columns: [['Name', (d) => d.name], ['District', (d) => districtName(d.districtId)], ['Phone', (d) => d.phone],
-      ['Tests', (d) => (d.tests || []).length], ['On phones', (d) => d.published ? 'Yes' : 'Hidden']],
+    columns: [['Name', (d) => d.name], ['Type', (d) => d.kind || ''], ['District', (d) => districtName(d.districtId)], ['Area', (d) => d.area],
+      ['Phone', (d) => d.phone], ['Tests', (d) => (d.tests || []).length || (d.feeChart ? 'Govt fee chart' : 0)], ['On phones', (d) => d.published ? 'Yes' : 'Hidden']],
     fields: [
-      { k: 'name', label: 'Hospital name', required: true },
+      { k: 'name', label: 'Hospital name (English)', required: true },
+      { k: 'nameBn', label: 'Hospital name (বাংলা)' },
+      { k: 'kind', label: 'Type (e.g. Upazila Health Complex, Private Hospital / Clinic)' },
+      { k: 'kindBn', label: 'Type in Bangla' },
+      { k: 'government', label: 'Government hospital', type: 'checkbox' },
       { k: 'districtId', label: 'District', type: 'district', required: true },
-      { k: 'area', label: 'Area' }, { k: 'address', label: 'Address' },
-      { k: 'phone', label: 'Phone', type: 'phone', required: true },
+      { k: 'area', label: 'Area / upazila' }, { k: 'address', label: 'Address' },
+      { k: 'phone', label: 'Main phone', type: 'phone' },
+      { k: 'otherPhones', label: 'Other numbers (comma separated)', type: 'csv' },
       { k: 'emergencyPhone', label: 'Emergency phone', type: 'phone' },
+      { k: 'email', label: 'Email' }, { k: 'website', label: 'Website' },
+      { k: 'lat', label: 'Map latitude (e.g. 23.7258)', type: 'decimal' }, { k: 'lng', label: 'Map longitude (e.g. 90.3973)', type: 'decimal' },
+      { k: 'beds', label: 'Beds', type: 'number' },
       { k: 'emergency', label: 'Emergency department', type: 'checkbox' },
       { k: 'open24h', label: 'Open 24 hours', type: 'checkbox' },
       { k: 'bloodBank', label: 'Blood bank', type: 'checkbox' },
@@ -115,21 +126,94 @@ const SCHEMAS = {
       { k: 'icu', label: 'ICU', type: 'checkbox' },
       { k: 'tests', label: 'Tests and prices: one per line → Test name | other names separated by ; | price in taka | note', type: 'tests' },
       { k: 'pricesCheckedOn', label: 'Prices checked on', type: 'date' },
+      { k: 'source', label: 'Source of these details (e.g. DGHS Facility Registry, phone call on 2026-11-03)' },
       { k: 'verified', label: 'Checked by a person', type: 'checkbox' },
       { k: 'published', label: 'Show on phones', type: 'checkbox', default: true },
     ],
   },
   pharmacies: {
     title: 'Pharmacies', idFrom: () => 'p-' + Date.now().toString(36),
-    columns: [['Name', (d) => d.name], ['District', (d) => districtName(d.districtId)], ['Area', (d) => d.area],
-      ['24 h', (d) => d.open24h ? 'Yes' : ''], ['On phones', (d) => d.published ? 'Yes' : 'Hidden']],
+    intro: 'The app has every licensed pharmacy from the DGDA register built in (117,274 shops). Use "Find a shop in the DGDA register" to correct a shop (add its phone number, mark it open 24 hours) or hide it (closed, wrong). Your changes and the shops you add are listed below; deleting one of your changes brings back the DGDA entry as it was.',
+    finder: () => pharmacyFinder(),
+    columns: [['Name', (d) => d.name], ['District', (d) => districtName(d.districtId)], ['Area', (d) => d.area], ['Phone', (d) => d.phone || ''],
+      ['Licence', (d) => d.licence || ''], ['24 h', (d) => d.open24h ? 'Yes' : ''],
+      ['On phones', (d) => d.published ? (d.licence ? 'Yes (replaces DGDA entry)' : 'Yes') : (d.licence ? 'Hidden (DGDA entry hidden too)' : 'Hidden')]],
     fields: [
       { k: 'name', label: 'Pharmacy name', required: true },
       { k: 'districtId', label: 'District', type: 'district', required: true },
-      { k: 'area', label: 'Area' }, { k: 'address', label: 'Address' },
-      { k: 'phone', label: 'Phone', type: 'phone', required: true },
+      { k: 'area', label: 'Area / upazila' }, { k: 'address', label: 'Address' },
+      { k: 'phone', label: 'Phone (optional: without one the app offers directions)', type: 'phone' },
       { k: 'open24h', label: 'Open 24 hours', type: 'checkbox' },
+      { k: 'licence', label: 'DGDA drug licence no. (if it matches a shop in the built-in DGDA list, this entry replaces it)' },
+      { k: 'validUpto', label: 'Licence valid until (optional)', type: 'date' },
+      { k: 'source', label: 'Source (e.g. DGDA register, phone call on 2026-11-06)' },
       { k: 'verified', label: 'Checked by a person', type: 'checkbox' },
+      { k: 'published', label: 'Show on phones (untick to hide this shop in the app, including its DGDA register entry)', type: 'checkbox', default: true },
+    ],
+  },
+  medicines: {
+    title: 'Medicines & prices', idFrom: (d) => 'm-' + slug(d.brand + ' ' + (d.strength || '')) + '-' + Date.now().toString(36).slice(-5),
+    intro: 'The app has every medicine from the DGDA price list built in (38,834 brands with the approved maximum retail price). Use "Find a medicine in the DGDA list" to correct a price or detail, or hide an entry. "+ Add" adds a medicine DGDA does not list. Your changes are listed below; deleting one brings back the DGDA entry as it was. Phones get every change within seconds.',
+    finder: () => medicineFinder(),
+    columns: [['Brand', (d) => d.brand], ['Generic', (d) => d.generic], ['Strength', (d) => d.strength || ''], ['Form', (d) => d.form || ''],
+      ['Company', (d) => d.company || ''], ['Price per unit', (d) => packsText(d.packs)],
+      ['Change', (d) => d.replaces ? (d.hideOnly ? 'Hides a DGDA entry' : 'Corrects a DGDA entry') : 'Added by you'],
+      ['On phones', (d) => d.published ? 'Yes' : 'Hidden']],
+    fields: [
+      { k: 'brand', label: 'Brand name (e.g. Napa)', required: true },
+      { k: 'generic', label: 'Generic name (e.g. Paracetamol)', required: true },
+      { k: 'strength', label: 'Strength (e.g. 500 mg, 120 mg/5 ml)' },
+      { k: 'form', label: 'Form (e.g. Tablet, Syrup, Injection)' },
+      { k: 'company', label: 'Company' },
+      { k: 'dar', label: 'DGDA registration (DAR) no.' },
+      { k: 'packs', label: 'Pack sizes and price per unit in taka: one per line → pack | price (e.g. 10 x 10 in Blister Pack | 1.20). Empty = the app says "no published price"', type: 'packs' },
+      { k: 'checkedOn', label: 'Price checked on (the app shows "checked by the Joruri BD team" with this date)', type: 'date' },
+      { k: 'source', label: 'Source (e.g. DGDA price list, company price sheet, pack label)' },
+      { k: 'published', label: 'Show on phones (untick to hide this medicine in the app, including its DGDA entry)', type: 'checkbox', default: true },
+    ],
+  },
+  police_stations: {
+    title: 'Police stations (thanas)', idFrom: (d) => 'ps-' + (d.districtId || 'x') + '-' + (slug(d.name) || Date.now().toString(36)),
+    intro: 'Every thana with the officer in charge (OC) number, shown under Police in the app. Built from the RAB list of OC numbers (October 2024) and the DMP website; refresh with tools/police-import. When an OC number changes, edit it here: phones update within seconds.',
+    columns: [['Name', (d) => d.name], ['বাংলা', (d) => d.nameBn || ''], ['District', (d) => districtName(d.districtId)], ['Unit', (d) => d.unit || 'District police'],
+      ['OC number', (d) => d.phone], ['Checked', (d) => d.checkedOn || ''], ['On phones', (d) => d.published ? 'Yes' : 'Hidden']],
+    fields: [
+      { k: 'name', label: 'Name (English), e.g. Ramna Model Thana', required: true },
+      { k: 'nameBn', label: 'Name (বাংলা), e.g. রমনা মডেল থানা' },
+      { k: 'districtId', label: 'District', type: 'district', required: true },
+      { k: 'unit', label: 'Metropolitan unit (empty for district police), e.g. Dhaka Metropolitan Police (DMP)' },
+      { k: 'unitBn', label: 'Metropolitan unit in Bangla' },
+      { k: 'phone', label: 'Officer in charge (OC) mobile', type: 'phone', required: true },
+      { k: 'otherPhones', label: 'Other numbers: duty officer, land line (comma separated)', type: 'csv' },
+      { k: 'address', label: 'Address' }, { k: 'email', label: 'E-mail' },
+      { k: 'lat', label: 'Map latitude (optional)', type: 'decimal' }, { k: 'lng', label: 'Map longitude (optional)', type: 'decimal' },
+      { k: 'open24h', label: 'Open 24 hours', type: 'checkbox', default: true },
+      { k: 'source', label: 'Source of the number (e.g. RAB list Oct 2024, phone call on 2026-11-04)' },
+      { k: 'sourceUrl', label: 'Source link' },
+      { k: 'checkedOn', label: 'Number checked on', type: 'date' },
+      { k: 'verified', label: 'Checked by a person (called or confirmed with the police)', type: 'checkbox' },
+      { k: 'published', label: 'Show on phones', type: 'checkbox', default: true },
+    ],
+  },
+  fire_stations: {
+    title: 'Fire stations', idFrom: (d) => 'fs-' + (d.districtId || 'x') + '-' + (slug(d.name) || Date.now().toString(36)),
+    intro: 'Every fire station and Fire Service office with its number, shown under Fire Service in the app. Built from the Fire Service and Civil Defence lists for the eight divisions (November 2026); refresh with tools/fire-import. Rows marked "Check" had a misprinted number: the app shows them without a number ("call 999 or 102") until you enter the right one here.',
+    columns: [['Name', (d) => d.name], ['বাংলা', (d) => d.nameBn || ''], ['District', (d) => districtName(d.districtId)], ['Type', (d) => d.office ? 'Office' : 'Station'],
+      ['Number', (d) => d.phone || '—'], ['Check', (d) => d.needsCheck ? '⚠ ' + d.needsCheck : ''], ['On phones', (d) => d.published ? 'Yes' : 'Hidden']],
+    fields: [
+      { k: 'name', label: 'Name (English), e.g. Fatullah Fire Station', required: true },
+      { k: 'nameBn', label: 'Name (বাংলা), e.g. ফতুল্লা ফায়ার স্টেশন' },
+      { k: 'districtId', label: 'District', type: 'district', required: true },
+      { k: 'office', label: 'This is an office (Deputy/Assistant Director), not a fire station', type: 'checkbox' },
+      { k: 'phone', label: 'Number (mobile or land line). Empty = the app says "number being checked, call 999 or 102"', type: 'phone' },
+      { k: 'otherPhones', label: 'Other numbers (comma separated)', type: 'csv' },
+      { k: 'needsCheck', label: 'Needs check: why the number is missing or doubtful (clear this once the number is confirmed)' },
+      { k: 'address', label: 'Address' }, { k: 'email', label: 'E-mail' },
+      { k: 'lat', label: 'Map latitude (optional)', type: 'decimal' }, { k: 'lng', label: 'Map longitude (optional)', type: 'decimal' },
+      { k: 'open24h', label: 'Open 24 hours', type: 'checkbox', default: true },
+      { k: 'source', label: 'Source of the number (e.g. FSCD Dhaka division list Nov 2026, phone call on 2026-11-06)' },
+      { k: 'checkedOn', label: 'Number checked on', type: 'date' },
+      { k: 'verified', label: 'Checked by a person (called the station)', type: 'checkbox' },
       { k: 'published', label: 'Show on phones', type: 'checkbox', default: true },
     ],
   },
@@ -197,15 +281,34 @@ async function load(col, force) {
   return state.data[col];
 }
 async function afterContentChange(action, col, id, summary) {
-  if (CONTENT.includes(col)) await B().bumpContent();
+  if (CONTENT.includes(col)) await publishContent(false, [col]);
   await B().audit({ action, collection: col, docId: id || '', summary: summary || '' });
+}
+/** 999 first, then by category, short codes before full numbers (apps up to 1.2.0 show this order as is). */
+function sortNumbers(list) {
+  const rank = (n) => NUMBER_CATEGORIES.indexOf(n.category) * 10 + (String(n.number || '').length > 6 ? 1 : 0);
+  return [...list].sort((a, b) => rank(a) - rank(b) || String(a.number).localeCompare(String(b.number), 'en', { numeric: true }));
+}
+/** Rebuilds the packed copies phones download, from the lists on this page. */
+async function publishContent(fresh, cols = CONTENT) {
+  const lists = {};
+  for (const col of cols) {
+    const all = await load(col, fresh);
+    lists[col] = all.filter((x) => x.published);
+    // A hidden correction of a built-in medicine is sent as "hide that DGDA row".
+    if (col === 'medicines') lists[col] = all.filter((x) => x.published || x.replaces).map((x) => (x.published ? x : { id: x.id, replaces: x.replaces, hidden: true }));
+    // A hidden pharmacy with a licence hides the DGDA register shop too (own list: older apps ignore it).
+    if (col === 'pharmacies') lists.pharmacy_hides = all.filter((x) => !x.published && x.licence).map((x) => ({ id: x.id, licence: x.licence, districtId: x.districtId }));
+  }
+  if (lists.emergency_numbers) lists.emergency_numbers = sortNumbers(lists.emergency_numbers);
+  await B().publishSnapshots(lists);
 }
 
 /* ---------- screens ---------- */
 const NAV = [
   ['', 'Overview'], ['dashboard', 'Dashboard'], ['announcements', 'Announcements'], ['app', 'App & updates'],
   ['', 'Content on phones'], ['emergency_numbers', 'Emergency numbers'], ['hospitals', 'Hospitals & tests'],
-  ['pharmacies', 'Pharmacies'], ['guides', 'Guides'],
+  ['pharmacies', 'Pharmacies'], ['medicines', 'Medicines & prices'], ['police_stations', 'Police stations'], ['fire_stations', 'Fire stations'], ['guides', 'Guides'],
   ['', 'People'], ['donors', 'Blood donors'], ['admins', 'Admins'],
   ['', 'Tools'], ['import', 'Import & backup'], ['audit', 'Activity log'],
 ];
@@ -315,20 +418,28 @@ function accessCheckFailedScreen() {
 }
 
 async function dashboard() {
-  const [meta, appMeta, ...lists] = await Promise.all([B().getMeta('content'), B().getMeta('app'),
-    ...['emergency_numbers', 'hospitals', 'pharmacies', 'guides', 'donors', 'announcements'].map((c) => load(c, true))]);
-  const [numbers, hospitals, pharmacies, guides, donors, notices] = lists;
+  // Big lists are only counted on the server; small ones are read.
+  const [meta, appMeta, numbers, guides, notices, nHosp, nGovHosp, nPharm, nPharm24, nDonors, nAppDonors, nPolice, nFire, nFireCheck, nMed, latestRelease] = await Promise.all([
+    B().getMeta('content'), B().getMeta('app'), load('emergency_numbers'), load('guides'), load('announcements'),
+    B().count('hospitals'), B().count('hospitals', 'government', true), B().count('pharmacies'), B().count('pharmacies', 'open24h', true),
+    B().count('donors'), B().count('donors', 'source', 'app'), B().count('police_stations'),
+    B().count('fire_stations'), B().count('fire_stations', 'phone', ''), B().count('medicines'), latestGithubRelease()]);
   const stat = (label, n, view, sub) => h('button', { class: 'stat', onclick: () => go(view) }, icon(view), h('b', {}, n), h('span', {}, label), sub ? h('small', {}, sub) : null);
   const unverified = numbers.filter((n) => n.verification?.status !== 'verified').length;
   const empty = guides.filter((g) => !(g.doNow?.en || []).length && !(g.doNow?.bn || []).length).length;
   const liveNotices = notices.filter((n) => n.published && !isExpired(n)).length;
   const todo = [
-    hospitals.length === 0 && ['hospitals', 'No hospitals yet: the Hospitals screen in the app is empty. Add them one by one or import the spreadsheet.'],
-    pharmacies.length === 0 && ['pharmacies', 'No pharmacies yet: the Pharmacy screen in the app is empty.'],
-    donors.length === 0 && ['donors', 'No blood donors yet. Add donors who agreed to share their number, or import the spreadsheet.'],
+    nHosp === 0 && ['hospitals', 'No hospitals yet: the Hospitals screen in the app is empty. Add them one by one or import the spreadsheet.'],
+    nPharm === 0 && ['pharmacies', 'The app has 117,274 licensed pharmacies from the DGDA register built in. On Pharmacies, find a shop to add its phone number, mark it open 24 hours or hide it.'],
+    nDonors === 0 && ['donors', 'No blood donors yet. Add donors who agreed to share their number, or import the spreadsheet.'],
     empty && ['guides', `${empty} guide(s) have no steps yet; the app shows them as "being written".`],
     unverified && ['emergency_numbers', `${unverified} emergency number(s) are not marked as checked; the app shows a "not yet verified" label.`],
     !appMeta.latestVersionCode && ['app', 'No app release is published yet, so phones are not told about updates.'],
+    // Happened with 1.2.0: released on GitHub, but phones were never told.
+    latestRelease && appMeta.latestVersionCode && latestRelease.code > appMeta.latestVersionCode && ['app', `Version ${latestRelease.name} (build ${latestRelease.code}) is on GitHub, but phones are still told ${appMeta.latestVersionName || ''} (build ${appMeta.latestVersionCode}) is the newest. Open App & updates, press "Use latest release", then Save.`],
+    nPolice === 0 && ['police_stations', 'No police stations in the database yet; the app uses its built-in list.'],
+    nFire === 0 && ['fire_stations', 'No fire stations in the database yet; the app uses its built-in list.'],
+    nFireCheck > 0 && ['fire_stations', `${nFireCheck} fire station(s) or office(s) have no number because it was misprinted in the Fire Service list. Call to confirm, then enter the number (rows marked ⚠ Check).`],
   ].filter(Boolean);
   return h('div', {},
     h('div', { class: 'head' }, h('h1', {}, 'Dashboard'),
@@ -336,10 +447,13 @@ async function dashboard() {
     h('div', { class: 'stats' },
       stat('Announcements', liveNotices, 'announcements', `${notices.length} total`),
       stat('Emergency numbers', numbers.length, 'emergency_numbers', unverified ? `${unverified} not checked yet` : 'all checked'),
-      stat('Hospitals', hospitals.length, 'hospitals', `${hospitals.reduce((a, x) => a + (x.tests || []).length, 0)} test prices`),
-      stat('Pharmacies', pharmacies.length, 'pharmacies', `${pharmacies.filter((p) => p.open24h).length} open 24 h`),
+      stat('Hospitals', nHosp, 'hospitals', `${nGovHosp} government`),
+      stat('Pharmacies', '117,274', 'pharmacies', `DGDA register · ${nPharm} changed or added by you · ${nPharm24} open 24 h`),
+      stat('Medicines & prices', '38,834', 'medicines', `DGDA price list · ${nMed} changed or added by you`),
+      stat('Police stations', nPolice, 'police_stations', 'with OC numbers'),
+      stat('Fire stations', nFire, 'fire_stations', nFireCheck ? `${nFireCheck} number(s) to check` : 'stations and offices'),
       stat('Guides', guides.length, 'guides', `${guides.filter((g) => g.reviewStatus === 'approved').length} doctor-approved`),
-      stat('Blood donors', donors.length, 'donors', `${donors.filter((d) => d.source === 'app').length} signed up in the app`),
+      stat('Blood donors', nDonors, 'donors', `${nAppDonors} signed up in the app`),
       stat('App version', appMeta.latestVersionName || '—', 'app', appMeta.latestVersionCode ? `build ${appMeta.latestVersionCode}` : 'not published')),
     todo.length ? h('div', { class: 'card' }, h('h3', {}, 'To do'),
       h('ul', { class: 'todo' }, todo.map(([v, t]) => h('li', {}, h('button', { class: 'link', onclick: () => go(v) }, t))))) : null,
@@ -350,7 +464,9 @@ async function dashboard() {
 const fmtTime = (iso) => { try { return new Date(iso).toLocaleString(); } catch { return iso; } };
 async function pushNow() {
   try {
-    await B().bumpContent();
+    toast('Reading everything and sending it to phones…');
+    for (const col of CONTENT) delete state.data[col];
+    await publishContent(true);
     await B().audit({ action: 'push', collection: 'meta', docId: 'content', summary: 'Sent content to phones' });
     toast('Done. Online phones will refresh within seconds.'); render();
   } catch (err) { console.error(err); toast('Could not send: ' + (err.message || err), true); }
@@ -366,20 +482,25 @@ async function listScreen(col) {
   const tableWrap = h('div', { class: 'tablewrap' });
   function renderList() {
     const qq = state.search.toLowerCase();
-    const shown = sorted.filter((d) => !qq || JSON.stringify(d).toLowerCase().includes(qq));
-    tableWrap.replaceChildren(h('table', {},
+    const matching = sorted.filter((d) => !qq || JSON.stringify(d).toLowerCase().includes(qq));
+    const shown = matching.slice(0, 300);
+    tableWrap.replaceChildren(...[h('table', {},
       h('thead', {}, h('tr', {}, schema.columns.map(([t]) => h('th', {}, t)), h('th', {}))),
       h('tbody', {}, shown.length ? shown.map((d) => h('tr', { class: d.hidden || d.published === false ? 'muted' : '' },
         schema.columns.map(([, f]) => h('td', {}, f(d) ?? '')),
         h('td', { class: 'actions' }, h('button', { onclick: () => openForm(col, d) }, 'Edit'),
           h('button', { class: 'danger', onclick: () => remove(col, d) }, 'Delete'))))
-        : h('tr', {}, h('td', { colspan: schema.columns.length + 1, class: 'center' }, 'Nothing here yet.')))));
+        : h('tr', {}, h('td', { colspan: schema.columns.length + 1, class: 'center' }, 'Nothing here yet.')))),
+      matching.length > shown.length ? h('p', { class: 'hint center' }, `Showing ${shown.length} of ${matching.length}. Type in the search box to find the rest.`) : null].filter(Boolean));
   }
   renderList();
+  if (schema.finder) search.placeholder = 'Search your changes…';
   return h('div', {},
     h('div', { class: 'head' }, h('h1', {}, schema.title, ' ', h('small', {}, `(${items.length})`)),
-      search, h('button', { class: 'primary', id: 'add', onclick: () => openForm(col, null) }, '+ Add')),
+      schema.finder ? null : search, h('button', { class: 'primary', id: 'add', onclick: () => openForm(col, null) }, '+ Add')),
     schema.intro ? h('p', { class: 'hint' }, schema.intro) : null,
+    schema.finder ? schema.finder() : null,
+    schema.finder ? h('div', { class: 'head' }, h('h2', { style: 'margin:0;flex:1' }, 'Your changes and additions ', h('small', {}, `(${items.length})`)), search) : null,
     schema.live ? h('p', { class: 'hint' }, 'Donor changes show in the app immediately for signed-in users. Donors who signed up in the app manage their own details; you can mark them checked or hide them.') : null,
     tableWrap);
 }
@@ -395,6 +516,7 @@ function field(f, value) {
       return h('option', { value: v, selected: v === value ? 'selected' : null }, label);
     })));
     case 'number': return wrap(h('input', { type: 'number', name, min: f.min ?? 0, step: 1, value: value ?? '' }));
+    case 'decimal': return wrap(h('input', { type: 'number', name, step: 'any', value: value ?? '' }));
     case 'district': {
       const sel = h('select', { name }, h('option', { value: '' }, '— choose —'),
         LOC.divisions.map((dv) => h('optgroup', { label: dv.en }, LOC.districts.filter((d) => d.divisionId === dv.id).map((d) => h('option', { value: d.id, selected: d.id === value ? 'selected' : null }, `${d.en} · ${d.bn}`)))));
@@ -403,6 +525,7 @@ function field(f, value) {
     case 'date': return wrap(h('input', { type: 'date', name, value: value || '' }));
     case 'csv': return wrap(h('input', { name, value: (value || []).join(', ') }));
     case 'lines': return wrap(h('textarea', { name, rows: 3 }, (value || []).join('\n')));
+    case 'packs': return wrap(h('textarea', { name, rows: 4, class: 'mono' }, (value || []).map((p) => `${p.pack} | ${p.price}`).join('\n')));
     case 'tests': return wrap(h('textarea', { name, rows: 8, class: 'mono' },
       (value || []).map((t) => [t.name, (t.aliases || []).join('; '), t.priceBdt ?? '', t.note || ''].join(' | ').replace(/( \| )+$/, '')).join('\n')));
     case 'bi': case 'bi-multi': {
@@ -426,6 +549,7 @@ function readForm(form, schema) {
     let v;
     switch (f.type) {
       case 'checkbox': v = val(f.k).checked; break;
+      case 'decimal': { const raw = val(f.k).value.trim(); v = raw === '' ? undefined : Number(raw); if (raw && !Number.isFinite(v)) problems.push(`${f.label}: not a number`); break; }
       case 'number': { const raw = val(f.k).value.trim(); v = raw === '' ? undefined : Number(raw); if (raw && !Number.isInteger(v)) problems.push(`${f.label}: must be a whole number`); break; }
       case 'csv': v = val(f.k).value.split(',').map((x) => x.trim()).filter(Boolean); break;
       case 'lines': v = lines(val(f.k).value); break;
@@ -436,6 +560,13 @@ function readForm(form, schema) {
         const p = cleanDigits(price).replace('+', '');
         if (!name) problems.push(`Tests line ${i + 1} has no test name`);
         return clean({ name, aliases: aliases.split(';').map((a) => a.trim()).filter(Boolean), priceBdt: p ? Number(p) : undefined, note: note || undefined });
+      }); break;
+      case 'packs': v = lines(val(f.k).value).map((line, i) => {
+        const cut = line.lastIndexOf('|');
+        const pack = (cut < 0 ? '' : line.slice(0, cut)).trim(); const raw = asciiDigits(cut < 0 ? line : line.slice(cut + 1)).replace(/[^0-9.]/g, '');
+        const price = Number(raw);
+        if (!raw || !Number.isFinite(price)) problems.push(`Pack line ${i + 1}: "${line}" has no price (write: pack | price)`);
+        return { pack, price };
       }); break;
       case 'phone': { const raw = val(f.k).value.trim(); v = raw ? normContact(raw) : undefined; if (raw && !v) problems.push(`${f.label}: "${raw}" is not a valid number`); break; }
       case 'mobile': { const raw = val(f.k).value.trim(); v = normMobile(raw) || undefined; if (raw && !v) problems.push(`${f.label}: "${raw}" is not a valid Bangladeshi mobile`); break; }
@@ -448,34 +579,41 @@ function readForm(form, schema) {
   return { data: clean(out), problems };
 }
 
-function openForm(col, existing) {
+/** existing: the item being edited; prefill: values for a new item (e.g. a DGDA entry being corrected). */
+function openForm(col, existing, prefill) {
   const schema = SCHEMAS[col];
   const form = h('form', { class: 'editor', id: 'editor' });
   const errs = h('div', { class: 'err' });
-  form.append(h('h2', {}, existing ? 'Edit' : 'Add', ' · ', schema.title),
+  form.append(...[h('h2', {}, existing ? 'Edit' : prefill ? 'Correct' : 'Add', ' · ', schema.title),
     existing?.source === 'app' ? h('p', { class: 'hint' }, 'Signed up in the app: name, phone and blood group come from the person. You can mark them checked or hide them.') : null,
-    ...schema.fields.map((f) => field(f, existing ? getPath(existing, f.k) : f.default)),
+    prefill?.note ? h('p', { class: 'hint' }, prefill.note) : null,
+    ...schema.fields.map((f) => field(f, existing ? getPath(existing, f.k) : prefill && getPath(prefill, f.k) !== undefined ? getPath(prefill, f.k) : f.default)),
     errs,
-    h('div', { class: 'row' }, h('button', { type: 'button', onclick: () => dialog.remove() }, 'Cancel'), h('button', { class: 'primary', type: 'submit', id: 'save' }, 'Save')));
+    h('div', { class: 'row' }, h('button', { type: 'button', onclick: () => dialog.remove() }, 'Cancel'), h('button', { class: 'primary', type: 'submit', id: 'save' }, 'Save'))].filter(Boolean));
   const dialog = h('div', { class: 'overlay', onmousedown: (e) => { if (e.target === dialog) dialog.remove(); } }, form);
   form.addEventListener('keydown', (e) => { if (e.key === 'Escape') dialog.remove(); });
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const { data, problems } = readForm(form, schema);
     if (problems.length) { errs.replaceChildren(...problems.map((p) => h('div', {}, '• ' + p))); return; }
-    let id = existing?.id || schema.idFrom(data);
+    let id = existing?.id || prefill?.id || schema.idFrom(data);
     // A new item must never overwrite another one that happens to get the
     // same ID (e.g. two hospitals with the same name in different districts).
     if (!existing && (state.data[col] || []).some((x) => x.id === id)) id = `${id}-${Date.now().toString(36).slice(-5)}`;
-    const doc = clean({ ...(existing || {}), ...data, id, updatedAt: new Date().toISOString() });
+    const doc = clean({ ...(prefill || {}), ...(existing || {}), ...data, note: undefined, hideOnly: undefined, id, updatedAt: new Date().toISOString() });
+    // A field emptied in the form is removed (otherwise the old value came back).
+    for (const f of schema.fields) if (!f.k.includes('.') && !(f.k in data)) delete doc[f.k];
+    // A number entered for a row that had none: the "needs check" note is done.
+    if (existing && !existing.phone && doc.phone && doc.needsCheck === existing.needsCheck) delete doc.needsCheck;
+    if (col === 'fire_stations' && !doc.phone) doc.phone = ''; // counted on the dashboard as "to check"
     if (col === 'donors' && !existing) doc.source = 'admin';
     if (col === 'hospitals') doc.demo = false;
     const btn = form.querySelector('#save'); btn.disabled = true; btn.textContent = 'Saving…';
     try {
       await B().set(col, id, doc);
-      await afterContentChange(existing ? 'edit' : 'add', col, id, doc.name?.en || doc.title?.en || doc.name || doc.number || '');
-      const list = state.data[col] || []; const i = list.findIndex((x) => x.id === id);
+      const list = state.data[col] || (state.data[col] = []); const i = list.findIndex((x) => x.id === id);
       if (i >= 0) list[i] = doc; else list.push(doc);
+      await afterContentChange(existing ? 'edit' : 'add', col, id, labelOf(doc));
       dialog.remove(); toast('Saved. Phones will update automatically.'); render();
     } catch (err) { console.error(err); errs.textContent = 'Could not save: ' + (err.message || err); btn.disabled = false; btn.textContent = 'Save'; }
   });
@@ -483,15 +621,140 @@ function openForm(col, existing) {
   form.querySelector('input,select,textarea')?.focus();
 }
 
+const labelOf = (d) => d.name?.en || d.title?.en || d.name || d.brand || d.number || d.id || '';
 async function remove(col, d) {
-  const label = d.name?.en || d.title?.en || d.name || d.number || d.id;
-  if (!confirm(`Delete "${label}"? Phones will remove it on their next update.`)) return;
+  const label = labelOf(d);
+  const restores = d.replaces || (col === 'pharmacies' && d.licence);
+  if (!confirm(restores ? `Delete your change to "${label}"? The app goes back to the DGDA entry as it was (if the DGDA list has it).` : `Delete "${label}"? Phones will remove it on their next update.`)) return;
   try {
     await B().del(col, d.id);
-    await afterContentChange('delete', col, d.id, String(label));
     state.data[col] = (state.data[col] || []).filter((x) => x.id !== d.id);
+    await afterContentChange('delete', col, d.id, String(label));
     toast('Deleted.'); render();
   } catch (err) { console.error(err); toast('Could not delete: ' + (err.message || err), true); }
+}
+
+/* ---------- the DGDA lists built into the app ---------- */
+// Copied next to this page by tools/admin-data/copy.mjs (runs before every hosting deploy).
+const fetched = {};
+function fetchJson(path) {
+  return fetched[path] ??= fetch(path).then((r) => { if (!r.ok) throw new Error(`${path}: ${r.status}`); return r.json(); })
+    .catch((e) => { delete fetched[path]; throw e; });
+}
+const asciiDigits = (s) => String(s || '').replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09E6));
+/** Same formula as Medicine.key in packages/core. */
+const medicineKey = (m) => [m.dar, m.brand, m.strength, m.form, m.company].join('|');
+const packsText = (packs) => (packs || []).map((p) => `৳${p.price}${p.pack ? ' (' + p.pack + ')' : ''}`).join('; ') || '—';
+let builtInMedicineRows = null;
+async function builtInMedicines() {
+  if (builtInMedicineRows) return builtInMedicineRows;
+  const j = await fetchJson('data/medicines.json');
+  builtInMedicineRows = j.medicines.map((r) => {
+    const m = { brand: r[0], generic: r[1], strength: r[2], form: r[3], company: j.companies[r[4]] ?? '', dar: r[5],
+      packs: (r[6] || []).map(([pack, price]) => ({ pack, price })) };
+    return { ...m, key: medicineKey(m), brandL: m.brand.toLowerCase(), genericL: m.generic.toLowerCase() };
+  });
+  return builtInMedicineRows;
+}
+const statusCell = (change) => !change ? 'DGDA entry' : change.published ? '✎ Changed by you' : 'Hidden';
+async function quickSave(col, doc, action) {
+  await B().set(col, doc.id, doc);
+  const list = state.data[col] || (state.data[col] = []); const i = list.findIndex((x) => x.id === doc.id);
+  if (i >= 0) list[i] = doc; else list.push(doc);
+  await afterContentChange(action, col, doc.id, labelOf(doc));
+}
+async function quickDelete(col, d) {
+  await B().del(col, d.id);
+  state.data[col] = (state.data[col] || []).filter((x) => x.id !== d.id);
+  await afterContentChange('delete', col, d.id, labelOf(d));
+}
+/** Hide a DGDA entry, or show it again (a hide-only change is removed; an edited one is published again). */
+async function toggleHidden(col, change, newHide) {
+  try {
+    if (!change) await quickSave(col, clean({ ...newHide(), note: undefined, hideOnly: true, published: false, updatedAt: new Date().toISOString() }), 'hide');
+    else if (!change.published && change.hideOnly) await quickDelete(col, change);
+    else await quickSave(col, { ...change, published: !change.published, updatedAt: new Date().toISOString() }, change.published ? 'hide' : 'show');
+    toast('Saved. Phones will update automatically.'); render();
+  } catch (err) { console.error(err); toast('Could not save: ' + (err.message || err), true); }
+}
+function finderCard(title, controls, out) {
+  return h('div', { class: 'card' }, h('h3', {}, title), h('div', { class: 'row', style: 'justify-content:flex-start;margin:0 0 10px' }, controls), out);
+}
+const hideButton = (change, onclick) => h('button', { class: change && !change.published ? '' : 'danger', onclick }, change && !change.published ? 'Show again' : 'Hide');
+
+function medicineFinder() {
+  const input = h('input', { type: 'search', placeholder: 'Brand or generic name, e.g. Napa or paracetamol', style: 'max-width:420px' });
+  const out = h('div', {}, h('p', { class: 'hint' }, 'Type at least 2 letters. The list (4.7 MB) loads the first time you search.'));
+  let timer;
+  async function run() {
+    const q = input.value.trim().toLowerCase();
+    if (q.length < 2) return;
+    out.replaceChildren(h('div', { class: 'loading' }, h('span', { class: 'spinner' }), 'Loading the DGDA list…'));
+    let rows;
+    try { rows = await builtInMedicines(); } catch (err) { out.replaceChildren(h('p', { class: 'err' }, 'Could not load the DGDA list: ' + err.message)); return; }
+    if (input.value.trim().toLowerCase() !== q) return; // the person kept typing
+    const changes = new Map((state.data.medicines || []).filter((d) => d.replaces).map((d) => [d.replaces, d]));
+    const rank = (m) => (m.brandL.startsWith(q) ? 0 : m.brandL.includes(q) ? 1 : 2);
+    const found = rows.filter((m) => m.brandL.includes(q) || m.genericL.includes(q))
+      .sort((a, b) => rank(a) - rank(b) || a.brand.length - b.brand.length || a.brand.localeCompare(b.brand));
+    const shown = found.slice(0, 100);
+    out.replaceChildren(h('div', { class: 'tablewrap' }, h('table', {},
+      h('thead', {}, h('tr', {}, ['Brand', 'Generic', 'Strength', 'Form', 'Company', 'Price per unit (DGDA)', 'Status', ''].map((x) => h('th', {}, x)))),
+      h('tbody', {}, shown.length ? shown.map((m) => {
+        const change = changes.get(m.key);
+        const prefill = () => ({ brand: m.brand, generic: m.generic, strength: m.strength, form: m.form, company: m.company, dar: m.dar, packs: m.packs,
+          replaces: m.key, source: 'DGDA price list', checkedOn: today(), published: true,
+          note: 'Correcting a DGDA entry: the app shows your version instead of the original. Delete your change later to go back to the DGDA entry.' });
+        return h('tr', { class: change && !change.published ? 'muted' : '' },
+          h('td', {}, m.brand || '—'), h('td', {}, m.generic), h('td', {}, m.strength), h('td', {}, m.form), h('td', {}, m.company),
+          h('td', {}, packsText(m.packs)), h('td', {}, statusCell(change)),
+          h('td', { class: 'actions' },
+            h('button', { onclick: () => (change ? openForm('medicines', change) : openForm('medicines', null, prefill())) }, 'Edit'),
+            hideButton(change, () => toggleHidden('medicines', change, () => ({ ...prefill(), checkedOn: undefined, id: SCHEMAS.medicines.idFrom(m) })))));
+      }) : h('tr', {}, h('td', { colspan: 8, class: 'center' }, 'No medicine found. Use "+ Add" to add it.'))))),
+    found.length > shown.length ? h('p', { class: 'hint center' }, `Showing ${shown.length} of ${found.length}. Type more to narrow it down.`) : '');
+  }
+  input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(run, 250); });
+  return finderCard('Find a medicine in the DGDA list', [input], out);
+}
+
+function pharmacyFinder() {
+  const district = h('select', { style: 'max-width:260px' }, h('option', { value: '' }, '— choose a district —'),
+    LOC.divisions.map((dv) => h('optgroup', { label: dv.en }, LOC.districts.filter((d) => d.divisionId === dv.id).map((d) => h('option', { value: d.id }, `${d.en} · ${d.bn}`)))));
+  const input = h('input', { type: 'search', placeholder: 'Shop name, area, address or licence no.', style: 'max-width:340px' });
+  const out = h('div', {}, h('p', { class: 'hint' }, 'Choose a district, then type part of the shop\'s name or address.'));
+  let timer;
+  async function run() {
+    const did = district.value; const q = input.value.trim().toLowerCase();
+    if (!did) return;
+    out.replaceChildren(h('div', { class: 'loading' }, h('span', { class: 'spinner' }), 'Loading…'));
+    let rows;
+    try { rows = (await fetchJson(`data/pharmacies/${did}.json`)).pharmacies; } catch (err) { out.replaceChildren(h('p', { class: 'err' }, 'Could not load the register: ' + err.message)); return; }
+    if (district.value !== did || input.value.trim().toLowerCase() !== q) return;
+    const changes = new Map((state.data.pharmacies || []).filter((d) => d.licence).map((d) => [d.licence.trim().toLowerCase(), d]));
+    const found = rows.filter((p) => !q || [p.name, p.area, p.address, p.licence].join(' ').toLowerCase().includes(q));
+    const shown = found.slice(0, 100);
+    out.replaceChildren(h('div', { class: 'tablewrap' }, h('table', {},
+      h('thead', {}, h('tr', {}, ['Shop', 'Area', 'Address', 'Licence', 'Valid until', 'Status', ''].map((x) => h('th', {}, x)))),
+      h('tbody', {}, shown.length ? shown.map((p) => {
+        const change = p.licence ? changes.get(p.licence.trim().toLowerCase()) : null;
+        const prefill = () => ({ id: 'p-' + p.id, name: p.name, districtId: did, area: p.area, address: p.address, licence: p.licence, validUpto: p.validUpto,
+          source: 'DGDA register', published: true,
+          note: 'Correcting a DGDA register shop: the app shows your version instead (e.g. with a phone number). Delete your change later to go back to the register entry.' });
+        return h('tr', { class: change && !change.published ? 'muted' : '' },
+          h('td', {}, p.name), h('td', {}, p.area || ''), h('td', {}, p.address || ''), h('td', {}, p.licence || '—'), h('td', {}, p.validUpto || ''),
+          h('td', {}, statusCell(change)),
+          h('td', { class: 'actions' }, p.licence
+            ? [h('button', { onclick: () => (change ? openForm('pharmacies', change) : openForm('pharmacies', null, prefill())) }, 'Edit'),
+              hideButton(change, () => toggleHidden('pharmacies', change, prefill))]
+            : h('small', { class: 'hint' }, 'no licence no.')));
+      }) : h('tr', {}, h('td', { colspan: 7, class: 'center' }, 'No shop found. Use "+ Add" to add it.'))))),
+    h('p', { class: 'hint center' }, found.length > shown.length
+      ? `Showing ${shown.length} of ${found.length} in ${districtName(did)}. Type to narrow it down.` : `${found.length} shop(s) in ${districtName(did)}.`));
+  }
+  district.addEventListener('change', run);
+  input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(run, 250); });
+  return finderCard('Find a shop in the DGDA register', [district, input], out);
 }
 
 /* ---------- import ---------- */
@@ -556,6 +819,8 @@ function fromSeedJson(json) {
   add('guides', json.guides, { published: true });
   add('hospitals', json.hospitals, { published: true });
   add('pharmacies', json.pharmacies, { published: true });
+  add('police_stations', json.policeStations, { published: true });
+  add('fire_stations', json.fireStations, { published: true });
   add('donors', json.donors && json.donors.filter((d) => d.shareConsent), { source: 'admin', hidden: false });
   return out;
 }
@@ -579,7 +844,8 @@ function importScreen() {
         await B().audit({ action: 'import', collection: b.col, docId: '', summary: `${b.items.length} items` });
         delete state.data[b.col];
       }
-      if (pending.some((b) => CONTENT.includes(b.col))) await B().bumpContent();
+      const changed = pending.map((b) => b.col).filter((c) => CONTENT.includes(c));
+      if (changed.length) await publishContent(true, [...new Set(changed)]);
       toast('Imported. Phones will update automatically.'); go('dashboard');
     } catch (err) { console.error(err); toast('Import failed: ' + (err.message || err), true); btn.disabled = false; btn.textContent = 'Import now'; }
   }
@@ -602,7 +868,7 @@ function importScreen() {
       h('p', {}, 'Download everything (content, announcements, donors, app settings) as one JSON file. Keep a copy before big changes.'),
       h('button', { class: 'primary', onclick: () => backup().catch((e) => toast('Backup failed: ' + e.message, true)) }, '⭳ Download backup')),
     h('div', { class: 'card' }, h('h3', {}, '1 · Start from the app\'s built-in data'),
-      h('p', {}, 'Choose the files from apps/mobile/assets/seed/: emergency_numbers.json, guides.json, and (optional) hospitals.json, pharmacies.json, donors.json. Do not import the *_demo files.'),
+      h('p', {}, 'Choose the files from apps/mobile/assets/seed/: emergency_numbers.json, guides.json, and (optional) hospitals.json, pharmacies.json, police_stations.json, fire_stations.json, donors.json. Do not import the *_demo files.'),
       picker('seedFiles', 'Seed JSON files', '.json', true, async (files) => {
         const batches = []; const problems = [];
         for (const f of files) {
@@ -635,14 +901,25 @@ async function auditScreen() {
 }
 
 /* ---------- app & updates (meta/app) ---------- */
-const RELEASES_REPO = 'Ashfaq1306/joruri-bd-releases';
-const RELEASES_DL = `https://github.com/${RELEASES_REPO}/releases/latest/download`;
+// APKs are GitHub releases of the (public) source repository.
+const RELEASES_REPO = 'Ashfaq1306/joruri-bd';
+/** {name, code} of the newest GitHub release (tag v1.2.0-build13), or null. */
+async function latestGithubRelease() {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${RELEASES_REPO}/releases/latest`, { cache: 'no-store' });
+    const m = r.ok ? /^v?(.+)-build(\d+)$/.exec((await r.json()).tag_name || '') : null;
+    return m ? { name: m[1], code: Number(m[2]) } : null;
+  } catch { return null; }
+}
 const APP_FIELDS = [
   { k: 'latestVersionName', label: 'Latest version name (e.g. 1.2.0)' },
   { k: 'latestVersionCode', label: 'Latest build number (the number after + in pubspec.yaml, e.g. 12)', type: 'number' },
   { k: 'minVersionCode', label: 'Oldest build still allowed (phones below this see an urgent "update now" message; 0 = none)', type: 'number' },
   { k: 'apkUrl', label: 'Download link for most phones (64-bit)' },
   { k: 'apkUrlArm32', label: 'Download link for older phones (32-bit)' },
+  // The app downloads the update itself and installs it only if the file matches.
+  { k: 'apkSha256', label: 'SHA-256 of the 64-bit APK (filled by "Use latest release"; empty = not checked)' },
+  { k: 'apkSha256Arm32', label: 'SHA-256 of the 32-bit APK' },
   bi('notes', 'What is new (shown in the update message)', true),
   { k: 'showDraftGuides', label: 'Show first-aid guides that a doctor has not approved yet (with a warning)', type: 'checkbox', default: true },
   { k: 'showUnverifiedContent', label: 'Show emergency numbers that are not marked as checked (with a label)', type: 'checkbox', default: true },
@@ -658,7 +935,10 @@ async function appScreen() {
     const m = /<!-- joruri (\{.*\}) -->/.exec(r.body || '');
     const info = m ? JSON.parse(m[1]) : {};
     const code = info.versionCode || Number((/build(\d+)$/.exec(r.tag_name) || [])[1]) || 0;
-    latest = { versionName: info.versionName || r.tag_name, versionCode: code, notes: info.notes || {} };
+    const sha = (n) => ((r.assets || []).find((a) => a.name === n)?.digest || '').replace(/^sha256:/, '');
+    latest = { versionName: info.versionName || r.tag_name, versionCode: code, notes: info.notes || {},
+      sha: sha('joruri-bd.apk'), shaArm32: sha('joruri-bd-arm32.apk'),
+      dl: `https://github.com/${RELEASES_REPO}/releases/download/${r.tag_name}` };
     const live = (current.latestVersionCode || 0) >= code;
     rel.className = 'card ' + (live ? 'ok' : 'bad');
     rel.replaceChildren(
@@ -670,7 +950,9 @@ async function appScreen() {
   function fill() {
     const set = (k, v) => { const el = form.elements.namedItem(k); if (el && v != null) el.value = v; };
     set('latestVersionName', latest.versionName); set('latestVersionCode', latest.versionCode);
-    set('apkUrl', `${RELEASES_DL}/joruri-bd.apk`); set('apkUrlArm32', `${RELEASES_DL}/joruri-bd-arm32.apk`);
+    // This release's own files, so the SHA-256 always matches.
+    set('apkUrl', `${latest.dl}/joruri-bd.apk`); set('apkUrlArm32', `${latest.dl}/joruri-bd-arm32.apk`);
+    set('apkSha256', latest.sha); set('apkSha256Arm32', latest.shaArm32);
     set('notes.en', latest.notes.en || ''); set('notes.bn', latest.notes.bn || '');
     toast('Filled in. Press Save to tell every phone.');
     form.querySelector('#saveApp').focus();
@@ -694,7 +976,7 @@ async function appScreen() {
       h('ol', {},
         h('li', {}, 'A developer raises the version in pubspec.yaml and runs the release script (apps/mobile/tool/release.ps1 on Windows, release.sh on Linux). It builds the app and publishes it on GitHub; the ', h('a', { href: 'download/', target: '_blank' }, 'download page'), ' always offers the newest one.'),
         h('li', {}, 'Here, press "Use latest release" and Save.'),
-        h('li', {}, 'Every phone with an older version shows "Update available" with a download button. Content changes (numbers, hospitals, guides, announcements) never need an app update.'))),
+        h('li', {}, 'Every phone with an older version downloads the update inside the app (by itself on Wi-Fi) and shows "Install update": one tap. Content changes (numbers, hospitals, guides, announcements) never need an app update.'))),
     rel,
     form);
 }

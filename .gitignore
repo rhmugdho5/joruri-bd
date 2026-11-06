@@ -50,3 +50,15 @@ Thumbs.db
 
 # Release APKs are published as GitHub releases, never committed
 *.apk
+
+# DGDA import working files (raw downloads contain personal data; never commit)
+tools/dgda-import/*.jsonl
+tools/dgda-import/*.log
+tools/dgda-import/medicines_list.json
+tools/dgda-import/*_report.txt
+
+# Police import: derived file (the app bundles assets/seed/police_stations.json)
+tools/police-import/police_stations_built.json
+
+# Copies of the DGDA lists for the admin website (tools/admin-data/copy.mjs)
+admin/data/

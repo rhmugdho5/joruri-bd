@@ -272,6 +272,29 @@ abstract class AppStrings {
   String get searchPharmaciesInMaps;
   String get demoPlace;
   String get searchTestInHospital;
+  String get tabPharmacies;
+  String get tabMedicinePrices;
+  String get chooseDistrictForPharmacies;
+  String get searchPharmacyHint;
+  String get onlyWithPhone;
+  String licenceValidUntil(String date);
+  String licenceExpired(String date);
+  String get pharmacyDirections;
+  String get pharmacySourceNote;
+  String get searchMedicine;
+  String get medicineSearchHint;
+  String medicinesFound(int n);
+  String get noMedicineFound;
+  String get pricePerUnit;
+  String get noPublishedPrice;
+  String get sameMedicineOtherBrands;
+  String get cheapest;
+  String medicinePriceNote(String date);
+  String medicineCheckedByTeam(String date);
+  String get medicineCompany;
+  String get medicineGeneric;
+  String get medicinePack;
+  String get medicineDar;
 
   // Account and profile
   String get brandLine;
@@ -342,6 +365,22 @@ abstract class AppStrings {
   String get liveListUnavailable;
   String get liveListBodyGoogle;
 
+  // Sign-in with a link sent by e-mail (free; SMS codes need a paid plan)
+  String get orWord;
+  String get signInWithEmail;
+  String get sendSignInLink;
+  String get sendAgain;
+  String signInLinkSent(String email);
+  String get pasteSignInLink;
+  String get signInLinkLabel;
+  String get pasteWord;
+  String get finishSignIn;
+  String get finishSignInBody;
+  String get emailInvalid;
+  String get signInLinkInvalid;
+  String get signInEmailMismatch;
+  String get emailDailyLimit;
+
   // App updates and announcements (managed on the admin website)
   String get updateAvailable;
   String get updateRequired;
@@ -354,7 +393,53 @@ abstract class AppStrings {
   String get checking;
   String get updatesCheckFailed;
   String get downloadStarted;
+  String updateDownloading(int? percent);
+  String get updateReady;
+  String get updateInstall;
+  String get updateAllowInstall;
+  String get updateDownloadFailed;
+  String get updateInBrowser;
   String get openLink;
+
+  // Hospital directory (DGHS data)
+  String get searchNameOrArea;
+  String get filterGovernment;
+  String get filterPrivate;
+  String beds(int n);
+  String get otherNumbers;
+  String get noPhoneListed;
+  String get govFeeNote;
+  String get emailLabel;
+  String get websiteLabel;
+  String get directionsLabel;
+  String showingFirst(int shown, int total);
+
+  // Police stations
+  String get policeStations;
+  String get findLocalPolice;
+  String findLocalPoliceSub(int n);
+  String get searchPoliceHint;
+  String policeStationsFound(int n);
+  String get officerInCharge;
+  String get chooseDistrictForPolice;
+  String get noPoliceStations;
+  String get policeSourceNote;
+  String get policeNumberTip;
+
+  // Fire stations (Fire Service and Civil Defence)
+  String get fireStations;
+  String get findLocalFire;
+  String findLocalFireSub(int n);
+  String get searchFireHint;
+  String fireStationsFound(int n);
+  String get chooseDistrictForFire;
+  String get noFireStations;
+  String get fireSourceNote;
+  String get fireNumberTip;
+  String get stationNumber;
+  String get officeNumber;
+  String get numberBeingChecked;
+  String get bloodBanksNearby;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

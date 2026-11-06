@@ -18,7 +18,7 @@ This repository contains the app (emergency core works **fully offline and witho
 | SOS | 3- or 5-second countdown (or instant) → GPS location → SMS app opens with all contacts and the message filled in → when you return, it calls your first contact. No contacts → dials 999. |
 | SOS status | Step-by-step result, coordinates to read out, call 999, resend, share via WhatsApp etc., "I am safe" |
 | Emergency contacts | Up to 3, Bangla digits accepted, first one is called |
-| Emergency numbers | 999, 109, 1098, 16263, 333, each with its source |
+| Emergency numbers | 999, Police HQ control room, 102 and Fire Service HQ, 109, 1098, 16263, 1090, 16430, 333, 106, each with its source; checked against police.gov.bd and fireservice.gov.bd on 2026-11-04 |
 | First aid | 17 topics; 5 have draft content (bleeding, burns, choking, electric shock, snake bite), 12 say "being written" |
 | Disaster | 6 topics listed; content comes in Phase 6 |
 | Toolkit | Flashlight, siren (bundled sound), compass, GPS coordinates, battery, contacts |
@@ -26,8 +26,10 @@ This repository contains the app (emergency core works **fully offline and witho
 | Easy Mode | Very large buttons and text for older users |
 | Settings | Language, theme, Easy Mode, SOS options, message preview, permissions, privacy, delete my data |
 | Blood | Pick the blood group needed → every donor with that group, with their number and a Call button. Filter by division, district and area; optionally include other compatible groups. Works offline. |
-| Hospitals | List by division, district and area, with services (emergency, 24 hours, blood bank, ambulance, ICU) and call buttons. **Tests & prices** tab: search a test (English or Bangla, e.g. CBC, সিবিসি) and see every hospital that does it, cheapest first. Each hospital page lists all its tests and prices. |
-| Pharmacy | Pharmacies by area, 24-hour ones first, with a Call button and a Google Maps fallback. |
+| Hospitals | **All 8,616 hospitals, clinics and blood banks registered with DGHS** (government, private, NGO), with Bangla names, phone numbers, address, map position and type. Search by name; filter by division, district, government/private, emergency, blood bank. **Tests & prices**: government user-fee chart for government hospitals (CBC, X-ray, ECG, ultrasound, CT, MRI …), cheapest first. Source and refresh scripts: `tools/dghs-import`. |
+| Pharmacy | **All 117,274 licensed retail pharmacies from the DGDA register** in every district: name, upazila, address, licence and its end date, phone (22,042) with a Call button, otherwise Directions. Search by name/upazila/bazar; phone and 24-hour filters; team-added shops from the admin panel on top. |
+| Police stations | **All 630 thanas in 64 districts** with the officer in charge's (OC) mobile number (RAB list, Oct 2024), Bangla names, address and e-mail for DMP stations. Search by thana, filter by district; edited on the admin panel. Source and scripts: `tools/police-import`. |
+| Medicine prices | **DGDA-approved maximum retail price of 38,834 registered medicines (22,525 priced)**: search by brand or generic, every pack size, and the same medicine from other companies cheapest first. Source and refresh scripts: `tools/dgda-import`. |
 
 ## Run it (first time)
 

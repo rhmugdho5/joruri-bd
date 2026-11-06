@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:joruri_core/joruri_core.dart';
@@ -16,10 +17,9 @@ class PlacesRepository {
 
   final AssetBundle _bundle;
 
-  Future<List<Hospital>> hospitals() async => [
-        ...await _load('assets/seed/hospitals.json', 'hospitals', Hospital.fromJson),
-        if (AppConfig.showDemoPlaces)
-          ...await _load('assets/seed/hospitals_demo.json', 'hospitals', Hospital.fromJson),
+  Future<List<Hospital>> hospitals([Hospital Function(Map<String, dynamic>) parse = Hospital.fromJson]) async => [
+        ...await _load('assets/seed/hospitals.json', 'hospitals', parse),
+        if (AppConfig.showDemoPlaces) ...await _load('assets/seed/hospitals_demo.json', 'hospitals', parse),
       ];
 
   Future<List<Pharmacy>> pharmacies() async => [
@@ -28,9 +28,37 @@ class PlacesRepository {
           ...await _load('assets/seed/pharmacies_demo.json', 'pharmacies', Pharmacy.fromJson),
       ];
 
+  /// Licensed pharmacies of one district from the DGDA register, bundled as
+  /// `assets/seed/pharmacies/{districtId}.json`, so only one district is read.
+  Future<List<Pharmacy>> registerPharmacies(String districtId) async {
+    if (!_districtIds.contains(districtId)) return const [];
+    return _load('assets/seed/pharmacies/$districtId.json', 'pharmacies',
+        (json) => Pharmacy.fromJson({...json, 'districtId': districtId, 'source': 'DGDA'}));
+  }
+
+  static final _districtIds = {for (final d in BdLocations.districts) d.id};
+
+  /// Every police station (thana) with its OC's number, bundled so the list
+  /// works offline (assets/seed/police_stations.json, tools/police-import).
+  Future<List<Station>> policeStations() => _load('assets/seed/police_stations.json', 'policeStations', Station.fromJson);
+
+  /// Every fire station and Fire Service office with its number, from the
+  /// Fire Service and Civil Defence's own lists (tools/fire-import).
+  Future<List<Station>> fireStations() => _load('assets/seed/fire_stations.json', 'fireStations', Station.fromJson);
+
+  /// DGDA-registered medicines with approved prices (assets/seed/medicines.json).
+  Future<MedicineList> medicines() async {
+    try {
+      return await compute(_decodeMedicines, await _bundle.loadString('assets/seed/medicines.json'));
+    } catch (e, s) {
+      AppLogger.error('Could not read medicines.json', e, s);
+      return const MedicineList([], '');
+    }
+  }
+
   Future<List<T>> _load<T>(String path, String key, T Function(Map<String, dynamic>) parse) async {
     try {
-      final json = jsonDecode(await _bundle.loadString(path)) as Map<String, dynamic>;
+      final json = await compute(_decodeMap, await _bundle.loadString(path));
       final out = <T>[];
       for (final item in (json[key] as List? ?? const [])) {
         try {
@@ -47,16 +75,121 @@ class PlacesRepository {
   }
 }
 
+Map<String, dynamic> _decodeMap(String text) => jsonDecode(text) as Map<String, dynamic>;
+
+/// The medicine list and the date DGDA's prices were downloaded.
+class MedicineList {
+  const MedicineList(this.items, this.downloadedOn);
+  final List<Medicine> items;
+  final String downloadedOn;
+}
+
+MedicineList _decodeMedicines(String text) {
+  final json = jsonDecode(text) as Map<String, dynamic>;
+  final companies = [for (final c in (json['companies'] as List? ?? const [])) c.toString()];
+  final out = <Medicine>[];
+  for (final row in (json['medicines'] as List? ?? const [])) {
+    try {
+      out.add(Medicine.fromRow(row as List, companies));
+    } catch (_) {
+      // One broken row must never hide the rest.
+    }
+  }
+  return MedicineList(out, (json['downloadedOn'] as String?) ?? '');
+}
+
 final placesRepositoryProvider = Provider<PlacesRepository>((ref) => PlacesRepository(rootBundle));
 /// Hospitals published on the admin website when downloaded; otherwise the
 /// bundled list (plus demo data while that is switched on).
 final hospitalsProvider = FutureProvider<List<Hospital>>((ref) async {
   final cache = await ref.watch(cachedContentProvider.future);
-  return parseSection(cache, 'hospitals', Hospital.fromJson) ?? await ref.watch(placesRepositoryProvider).hospitals();
+  final charts = await ref.watch(feeChartsProvider.future);
+  Hospital parse(Map<String, dynamic> json) => Hospital.fromJson(withFeeChart(json, charts));
+  return parseSection(cache, 'hospitals', parse) ?? await ref.watch(placesRepositoryProvider).hospitals(parse);
 });
+
+/// Shared price lists (e.g. the government user-fee chart), so 700 hospitals
+/// do not each carry the same prices. A hospital with "feeChart" and no tests
+/// of its own gets the chart's tests.
+final feeChartsProvider = FutureProvider<Map<String, List<dynamic>>>((ref) async {
+  try {
+    final json = jsonDecode(await rootBundle.loadString('assets/seed/fee_charts.json')) as Map<String, dynamic>;
+    return {for (final e in json.entries) if (e.value is List) e.key: e.value as List};
+  } catch (e, s) {
+    AppLogger.error('Fee charts unreadable', e, s);
+    return const {};
+  }
+});
+
+Map<String, dynamic> withFeeChart(Map<String, dynamic> json, Map<String, List<dynamic>> charts) {
+  final chart = charts[json['feeChart']];
+  final own = json['tests'];
+  if (chart == null || (own is List && own.isNotEmpty)) return json;
+  return {...json, 'tests': chart};
+}
+
+/// Pharmacies added or checked by the team on the admin website (24-hour
+/// shops, verified numbers). Few; downloaded with the other content.
 final pharmaciesProvider = FutureProvider<List<Pharmacy>>((ref) async {
   final cache = await ref.watch(cachedContentProvider.future);
   return parseSection(cache, 'pharmacies', Pharmacy.fromJson) ?? await ref.watch(placesRepositoryProvider).pharmacies();
+});
+
+/// Every pharmacy of one district: the team's entries first, then the DGDA
+/// register (a register entry is left out when the team has the same licence).
+final districtPharmaciesProvider = FutureProvider.family<List<Pharmacy>, String>((ref, districtId) async {
+  final team = (await ref.watch(pharmaciesProvider.future)).where((p) => p.districtId == districtId).toList();
+  final register = await ref.watch(placesRepositoryProvider).registerPharmacies(districtId);
+  final known = {for (final p in team) if (p.licence.isNotEmpty) p.licence.toLowerCase()};
+  // Shops hidden on the admin website (closed, wrong): their licence numbers.
+  final hidden = await ref.watch(hiddenPharmacyLicencesProvider.future);
+  return [
+    ...team,
+    ...register.where((p) => !known.contains(p.licence.toLowerCase()) && !hidden.contains(p.licence.toLowerCase())),
+  ];
+});
+
+/// Licence numbers of DGDA register shops hidden on the admin website.
+final hiddenPharmacyLicencesProvider = FutureProvider<Set<String>>((ref) async {
+  final cache = await ref.watch(cachedContentProvider.future);
+  return {
+    for (final x in (cache?['pharmacyHides'] as List? ?? const []))
+      if (x is Map && x['licence'] is String && (x['licence'] as String).trim().isNotEmpty) (x['licence'] as String).trim().toLowerCase(),
+  };
+});
+
+/// Police stations published on the admin website when downloaded;
+/// otherwise the bundled list.
+final policeStationsProvider = FutureProvider<List<Station>>((ref) async {
+  final cache = await ref.watch(cachedContentProvider.future);
+  return parseSection(cache, 'policeStations', Station.fromJson) ?? await ref.watch(placesRepositoryProvider).policeStations();
+});
+
+/// Fire stations published on the admin website when downloaded;
+/// otherwise the bundled list.
+final fireStationsProvider = FutureProvider<List<Station>>((ref) async {
+  final cache = await ref.watch(cachedContentProvider.future);
+  Station parse(Map<String, dynamic> json) => Station.fromJson({...json, 'service': 'fire'});
+  return parseSection(cache, 'fireStations', parse) ?? await ref.watch(placesRepositoryProvider).fireStations();
+});
+
+/// The police or fire station list.
+FutureProvider<List<Station>> stationsProvider(StationService service) =>
+    service == StationService.fire ? fireStationsProvider : policeStationsProvider;
+
+/// The bundled DGDA list: read once, the first time the medicine search opens.
+final builtInMedicinesProvider = FutureProvider<MedicineList>((ref) => ref.watch(placesRepositoryProvider).medicines());
+
+/// The DGDA list with the medicines corrected, hidden or added on the admin
+/// website (downloaded with the other content).
+final medicinesProvider = FutureProvider<MedicineList>((ref) async {
+  final base = await ref.watch(builtInMedicinesProvider.future);
+  final edits = (await ref.watch(cachedContentProvider.future))?['medicines'];
+  if (edits is! List || edits.isEmpty) return base;
+  return MedicineList(
+    applyMedicineEdits(base.items, [for (final e in edits) if (e is Map) Map<String, dynamic>.from(e)]),
+    base.downloadedOn,
+  );
 });
 
 /// The area chosen on the Hospitals and Pharmacy screens, remembered on this phone.

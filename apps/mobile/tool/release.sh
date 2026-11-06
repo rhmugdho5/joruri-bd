@@ -8,16 +8,16 @@
 # 1. Raise the version in pubspec.yaml first (e.g. 1.0.0+10 -> 1.1.0+11).
 #    The number after + must go up every release.
 # 2. This script builds the signed APKs and publishes them as a GitHub
-#    release in Ashfaq1306/joruri-bd-releases (free, public downloads;
+#    release in Ashfaq1306/joruri-bd, the public project repository (free downloads;
 #    Firebase's free plan does not allow APK files). The download links
 #    ".../releases/latest/download/joruri-bd.apk" always point to the newest.
-# 3. Then on the admin panel's "App & updates" page press "Use latest
-#    release" and Save: every phone shows "Update available".
+# 3. It then tells every phone (tools/announce_release.mjs, same as "Use
+#    latest release" + Save on the admin panel): "Update available".
 # Needs: flutter, gh (signed in, with access to the releases repo), firebase, node.
 set -euo pipefail
 mobile="$(cd "$(dirname "$0")/.." && pwd)"
 root="$(cd "$mobile/../.." && pwd)"
-repo="Ashfaq1306/joruri-bd-releases"
+repo="Ashfaq1306/joruri-bd"
 
 if [[ "${1:-}" != "--website-only" ]]; then
   notes="${1:-}"; notes_bn="${2:-}"
@@ -33,6 +33,15 @@ if [[ "${1:-}" != "--website-only" ]]; then
   mkdir -p "$stage"
   cp "$out/app-arm64-v8a-release.apk" "$stage/joruri-bd.apk"
   cp "$out/app-armeabi-v7a-release.apk" "$stage/joruri-bd-arm32.apk"
+  # Google sign-in needs the Web client ID inside the APK (see res/raw/keep.xml).
+  sdk="${ANDROID_HOME:-$HOME/Android/Sdk}"
+  aapt="$(ls "$sdk"/build-tools/*/aapt2* 2>/dev/null | sort | tail -1)"
+  if [ -n "$aapt" ]; then
+    for apk in joruri-bd.apk joruri-bd-arm32.apk; do
+      "$aapt" dump resources "$stage/$apk" | grep -q 'string/default_web_client_id' \
+        || { echo "$apk has no default_web_client_id: Google sign-in would fail." >&2; exit 1; }
+    done
+  else echo "warning: aapt2 not found, could not check the APK for the Google sign-in client ID" >&2; fi
   NAME="$name" CODE="$code" NOTES="$notes" NOTES_BN="$notes_bn" APK="$stage/joruri-bd.apk" node -e '
     const e = process.env, fs = require("fs");
     const size = Math.round(fs.statSync(e.APK).size / 104857.6) / 10;
@@ -45,6 +54,8 @@ if [[ "${1:-}" != "--website-only" ]]; then
 fi
 
 (cd "$root" && firebase deploy --only hosting --project joruri-bd)
+# Tell every phone about the new version (was a manual admin-panel step).
+[[ "${1:-}" == "--website-only" ]] || (cd "$root" && node tools/announce_release.mjs)
 echo
 echo "Done. Download page: https://joruri-bd.web.app/download/"
-[[ "${1:-}" == "--website-only" ]] || echo 'Last step: open https://joruri-bd.web.app/#app , press "Use latest release", then Save. Every phone is then told to update.'
+[[ "${1:-}" == "--website-only" ]] || echo 'Every phone with an older version now shows "Update available" (check: https://joruri-bd.web.app/#app).'
